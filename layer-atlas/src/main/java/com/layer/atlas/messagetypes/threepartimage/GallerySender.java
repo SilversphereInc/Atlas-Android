@@ -3,6 +3,7 @@ package com.layer.atlas.messagetypes.threepartimage;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -28,21 +29,23 @@ public class GallerySender extends AttachmentSender {
     private static final String PERMISSION = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) ? Manifest.permission.READ_EXTERNAL_STORAGE : null;
     public static final int ACTIVITY_REQUEST_CODE = 10;
     public static final int PERMISSION_REQUEST_CODE = 11;
+    Fragment callingFragment;
 
     private WeakReference<Activity> mActivity = new WeakReference<Activity>(null);
 
-    public GallerySender(int titleResId, Integer iconResId, Activity activity) {
-        this(activity.getString(titleResId), iconResId, activity);
+    public GallerySender(int titleResId, Integer iconResId, Activity activity, Fragment fragment) {
+        this(activity.getString(titleResId), iconResId, activity, fragment);
     }
 
-    public GallerySender(String title, Integer iconResId, Activity activity) {
+    public GallerySender(String title, Integer iconResId, Activity activity, Fragment fragment) {
         super(title, iconResId);
+        callingFragment = fragment;
         mActivity = new WeakReference<Activity>(activity);
     }
 
     private void startGalleryIntent(Activity activity) {
         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        activity.startActivityForResult(Intent.createChooser(intent, getContext().getString(R.string.atlas_gallery_sender_chooser)), ACTIVITY_REQUEST_CODE);
+        callingFragment.startActivityForResult(Intent.createChooser(intent, getContext().getString(R.string.atlas_gallery_sender_chooser)), ACTIVITY_REQUEST_CODE);
     }
 
     @Override

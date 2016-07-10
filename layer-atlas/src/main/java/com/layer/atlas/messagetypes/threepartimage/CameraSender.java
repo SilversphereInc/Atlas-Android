@@ -1,6 +1,7 @@
 package com.layer.atlas.messagetypes.threepartimage;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,17 +30,19 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class CameraSender extends AttachmentSender {
     public static final int ACTIVITY_REQUEST_CODE = 20;
+    private Fragment callingFragment;
 
     private WeakReference<Activity> mActivity = new WeakReference<Activity>(null);
 
     private final AtomicReference<String> mPhotoFilePath = new AtomicReference<String>(null);
 
-    public CameraSender(int titleResId, Integer iconResId, Activity activity) {
-        this(activity.getString(titleResId), iconResId, activity);
+    public CameraSender(int titleResId, Integer iconResId, Activity activity, Fragment fragment) {
+        this(activity.getString(titleResId), iconResId, activity, fragment);
     }
 
-    public CameraSender(String title, Integer iconResId, Activity activity) {
+    public CameraSender(String title, Integer iconResId, Activity activity, Fragment fragment) {
         super(title, iconResId);
+        callingFragment = fragment;
         mActivity = new WeakReference<Activity>(activity);
     }
 
@@ -50,7 +53,7 @@ public class CameraSender extends AttachmentSender {
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         final Uri outputUri = Uri.fromFile(file);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
-        activity.startActivityForResult(cameraIntent, ACTIVITY_REQUEST_CODE);
+        callingFragment.startActivityForResult(cameraIntent, ACTIVITY_REQUEST_CODE);
     }
 
     @Override
