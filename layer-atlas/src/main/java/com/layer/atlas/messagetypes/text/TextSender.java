@@ -2,6 +2,7 @@ package com.layer.atlas.messagetypes.text;
 
 import com.layer.atlas.R;
 import com.layer.atlas.messagetypes.MessageSender;
+import com.layer.atlas.provider.Participant;
 import com.layer.atlas.util.Log;
 import com.layer.sdk.messaging.Message;
 import com.layer.sdk.messaging.MessageOptions;
@@ -27,7 +28,9 @@ public class TextSender extends MessageSender {
         if (Log.isLoggable(Log.VERBOSE)) Log.v("Sending text message");
 
         // Create notification string
-        String myName = getParticipantProvider().getParticipant(getLayerClient().getAuthenticatedUserId()).getName();
+        String particID = getLayerClient().getAuthenticatedUserId();
+        Participant myPart = getParticipantProvider().getParticipant(particID);
+        String myName = myPart.getName();
         String notificationString = getContext().getString(R.string.atlas_notification_text, myName, (text.length() < mMaxNotificationLength) ? text : (text.substring(0, mMaxNotificationLength) + "…"));
 
         // Send message
