@@ -98,7 +98,7 @@ public class Util {
             if (participantId.equals(userId)) continue;
             Participant participant = provider.getParticipant(participantId);
             if (participant == null) continue;
-            String initials = conversation.getParticipants().size() > 2 ? getInitials(participant) : participant.getName();
+            String initials = participant.getName();//conversation.getParticipants().size() > 2 ? getInitials(participant) : participant.getName();
             if (sb.length() > 0) sb.append(", ");
             sb.append(initials);
         }
