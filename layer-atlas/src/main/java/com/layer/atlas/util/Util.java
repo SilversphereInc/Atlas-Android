@@ -98,7 +98,7 @@ public class Util {
             if (participantId.equals(userId)) continue;
             Participant participant = provider.getParticipant(participantId);
             if (participant == null) continue;
-            String initials = participant.getName();//conversation.getParticipants().size() > 2 ? getInitials(participant) : participant.getName();
+            String initials = conversation.getParticipants().size() > 2 ? getFirstName(participant) : participant.getName(); //getInitials(participant) : participant.getName();
             if (sb.length() > 0) sb.append(", ");
             sb.append(initials);
         }
@@ -116,6 +116,24 @@ public class Util {
             conversation.removeMetadataAtKeyPath(METADATA_KEY_CONVERSATION_TITLE);
         } else {
             conversation.putMetadataAtKeyPath(METADATA_KEY_CONVERSATION_TITLE, title.trim());
+        }
+    }
+
+    public static String getFirstName(Participant p) {
+        String fullName = p.getName();
+        if(fullName == null || fullName.isEmpty()) return "";
+        if (fullName.contains(" ")) {
+            String[] names = fullName.split(" ");
+            StringBuilder b = new StringBuilder();
+            for (String name : names) {
+                String t = name.trim();
+                if (t.isEmpty()) continue;
+                b.append(t);
+                break;
+            }
+            return b.toString();
+        } else {
+            return fullName;
         }
     }
 
