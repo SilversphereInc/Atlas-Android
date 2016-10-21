@@ -120,6 +120,9 @@ public class Util {
     }
 
     public static String getFirstName(Participant p) {
+        if(p.getName().equalsIgnoreCase("Knockdown User")) {
+            return p.getName();
+        }
         String fullName = p.getName();
         if(fullName == null || fullName.isEmpty()) return "";
         if (fullName.contains(" ")) {
