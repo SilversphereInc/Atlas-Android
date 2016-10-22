@@ -97,7 +97,11 @@ public class Util {
         for (String participantId : conversation.getParticipants()) {
             if (participantId.equals(userId)) continue;
             Participant participant = provider.getParticipant(participantId);
-            if (participant == null) continue;
+//            if (participant == null) continue;
+            if (participant == null) {
+                sb.append("Knockdown User");
+                continue;
+            }
             String initials = conversation.getParticipants().size() > 2 ? getFirstName(participant) : participant.getName(); //getInitials(participant) : participant.getName();
             if (sb.length() > 0) sb.append(", ");
             sb.append(initials);
