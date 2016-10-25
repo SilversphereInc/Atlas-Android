@@ -29,7 +29,7 @@ public class AtlasHistoricMessagesFetchLayout extends SwipeRefreshLayout impleme
         setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (mConversation.getHistoricSyncStatus() == Conversation.HistoricSyncStatus.MORE_AVAILABLE) {
+                if (mConversation != null && mConversation.getHistoricSyncStatus() == Conversation.HistoricSyncStatus.MORE_AVAILABLE) {
                     mConversation.syncMoreHistoricMessages(mSyncAmount);
                 }
             }
