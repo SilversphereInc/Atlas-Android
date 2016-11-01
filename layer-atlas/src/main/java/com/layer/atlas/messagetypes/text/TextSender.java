@@ -2,8 +2,9 @@ package com.layer.atlas.messagetypes.text;
 
 import com.layer.atlas.R;
 import com.layer.atlas.messagetypes.MessageSender;
-import com.layer.atlas.provider.Participant;
 import com.layer.atlas.util.Log;
+import com.layer.atlas.util.Util;
+import com.layer.sdk.messaging.Identity;
 import com.layer.sdk.messaging.Message;
 import com.layer.sdk.messaging.MessageOptions;
 import com.layer.sdk.messaging.MessagePart;
@@ -28,14 +29,19 @@ public class TextSender extends MessageSender {
         if (Log.isLoggable(Log.VERBOSE)) Log.v("Sending text message");
 
         // Create notification string
-        String particID = getLayerClient().getAuthenticatedUserId();
-        Participant myPart = getParticipantProvider().getParticipant(particID);
-        String notificationString = "";
-        if(myPart != null)
-        {
-            String myName = myPart.getName();
-            notificationString = getContext().getString(R.string.atlas_notification_text, myName, (text.length() < mMaxNotificationLength) ? text : (text.substring(0, mMaxNotificationLength) + "…"));
-        }
+//<<<<<<< HEAD
+//        String particID = getLayerClient().getAuthenticatedUserId();
+//        Participant myPart = getParticipantProvider().getParticipant(particID);
+//        String notificationString = "";
+//        if(myPart != null)
+//        {
+//            String myName = myPart.getName();
+//            notificationString = getContext().getString(R.string.atlas_notification_text, myName, (text.length() < mMaxNotificationLength) ? text : (text.substring(0, mMaxNotificationLength) + "…"));
+//        }
+//=======
+        Identity me = getLayerClient().getAuthenticatedUser();
+        String myName = me == null ? "" : Util.getDisplayName(me);
+        String notificationString = getContext().getString(R.string.atlas_notification_text, myName, (text.length() < mMaxNotificationLength) ? text : (text.substring(0, mMaxNotificationLength) + "…"));
 
         // Send message
         MessagePart part = getLayerClient().newMessagePart(text);
