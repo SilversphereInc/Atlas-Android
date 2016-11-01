@@ -134,11 +134,10 @@ public class Util {
     }
 
     public static String getFirstName(Identity identity) {
-        if(identity.getDisplayName().equalsIgnoreCase("Knockdown User")) {
+        String fullName = identity.getDisplayName();
+        if(fullName == null || (fullName != null && fullName.equalsIgnoreCase("Knockdown User"))) {
             return identity.getDisplayName();
         }
-        String fullName = identity.getDisplayName();
-        if(fullName == null || fullName.isEmpty()) return "";
         if (fullName.contains(" ")) {
             String[] names = fullName.split(" ");
             StringBuilder b = new StringBuilder();
