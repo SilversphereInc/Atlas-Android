@@ -108,7 +108,7 @@ public class Util {
         Identity authenticatedUser = client.getAuthenticatedUser();
         for (Identity participant : conversation.getParticipants()) {
             if (participant.equals(authenticatedUser)) continue;
-            if (participant.getDisplayName().trim().isEmpty()) {
+            if (participant.getDisplayName() == null || (participant.getDisplayName() != null && participant.getDisplayName().trim().isEmpty())) {
                 sb.append("Knockdown User");
                 continue;
             }
