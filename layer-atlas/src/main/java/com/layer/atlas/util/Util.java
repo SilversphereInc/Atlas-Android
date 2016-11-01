@@ -99,7 +99,6 @@ public class Util {
 //        for (String participantId : conversation.getParticipants()) {
 //            if (participantId.equals(userId)) continue;
 //            Participant participant = provider.getParticipant(participantId);
-////            if (participant == null) continue;
 //            if (participant == null) {
 //                sb.append("Knockdown User");
 //                continue;
@@ -109,7 +108,11 @@ public class Util {
         Identity authenticatedUser = client.getAuthenticatedUser();
         for (Identity participant : conversation.getParticipants()) {
             if (participant.equals(authenticatedUser)) continue;
-            String initials = conversation.getParticipants().size() > 2 ? getInitials(participant) : Util.getDisplayName(participant);
+            if (participant.getDisplayName().trim().isEmpty()) {
+                sb.append("Knockdown User");
+                continue;
+            }
+            String initials = conversation.getParticipants().size() > 2 ? getFirstName(participant) : getDisplayName(participant); //getInitials(participant) : Util.getDisplayName(participant);
             if (sb.length() > 0) sb.append(", ");
             sb.append(initials);
         }
@@ -130,27 +133,26 @@ public class Util {
         }
     }
 
-//<<<<<<< HEAD
-//    public static String getFirstName(Participant p) {
-//        if(p.getName().equalsIgnoreCase("Knockdown User")) {
-//            return p.getName();
-//        }
-//        String fullName = p.getName();
-//        if(fullName == null || fullName.isEmpty()) return "";
-//        if (fullName.contains(" ")) {
-//            String[] names = fullName.split(" ");
-//            StringBuilder b = new StringBuilder();
-//            for (String name : names) {
-//                String t = name.trim();
-//                if (t.isEmpty()) continue;
-//                b.append(t);
-//                break;
-//            }
-//            return b.toString();
-//        } else {
-//            return fullName;
-//        }
-//    }
+    public static String getFirstName(Identity identity) {
+        if(identity.getDisplayName().equalsIgnoreCase("Knockdown User")) {
+            return identity.getDisplayName();
+        }
+        String fullName = identity.getDisplayName();
+        if(fullName == null || fullName.isEmpty()) return "";
+        if (fullName.contains(" ")) {
+            String[] names = fullName.split(" ");
+            StringBuilder b = new StringBuilder();
+            for (String name : names) {
+                String t = name.trim();
+                if (t.isEmpty()) continue;
+                b.append(t);
+                break;
+            }
+            return b.toString();
+        } else {
+            return fullName;
+        }
+    }
 //
 //    public static String getInitials(Participant p) {
 //        return getInitials(p.getName());
