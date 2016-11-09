@@ -29,16 +29,6 @@ public class TextSender extends MessageSender {
         if (Log.isLoggable(Log.VERBOSE)) Log.v("Sending text message");
 
         // Create notification string
-//<<<<<<< HEAD
-//        String particID = getLayerClient().getAuthenticatedUserId();
-//        Participant myPart = getParticipantProvider().getParticipant(particID);
-//        String notificationString = "";
-//        if(myPart != null)
-//        {
-//            String myName = myPart.getName();
-//            notificationString = getContext().getString(R.string.atlas_notification_text, myName, (text.length() < mMaxNotificationLength) ? text : (text.substring(0, mMaxNotificationLength) + "…"));
-//        }
-//=======
         Identity me = getLayerClient().getAuthenticatedUser();
         String myName = me == null ? "" : Util.getDisplayName(me);
         String notificationString = getContext().getString(R.string.atlas_notification_text, myName, (text.length() < mMaxNotificationLength) ? text : (text.substring(0, mMaxNotificationLength) + "…"));

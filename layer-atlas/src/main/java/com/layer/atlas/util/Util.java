@@ -94,22 +94,13 @@ public class Util {
         if (metadataTitle != null) return metadataTitle.trim();
 
         StringBuilder sb = new StringBuilder();
-//<<<<<<< HEAD
-//        String userId = client.getAuthenticatedUserId();
-//        for (String participantId : conversation.getParticipants()) {
-//            if (participantId.equals(userId)) continue;
-//            Participant participant = provider.getParticipant(participantId);
-//            if (participant == null) {
-//                sb.append("Knockdown User");
-//                continue;
-//            }
-//            String initials = conversation.getParticipants().size() > 2 ? getFirstName(participant) : participant.getName(); //getInitials(participant) : participant.getName();
-//=======
         Identity authenticatedUser = client.getAuthenticatedUser();
         for (Identity participant : conversation.getParticipants()) {
             if (participant.equals(authenticatedUser)) continue;
             if (participant.getDisplayName() == null || (participant.getDisplayName() != null && participant.getDisplayName().trim().isEmpty())) {
+                boolean appendComma = (sb.length() > 0);
                 sb.append("Knockdown User");
+                if(appendComma) sb.append(", ");
                 continue;
             }
             String initials = conversation.getParticipants().size() > 2 ? getFirstName(participant) : getDisplayName(participant); //getInitials(participant) : Util.getDisplayName(participant);
@@ -202,6 +193,7 @@ public class Util {
             } else if (!TextUtils.isEmpty(last)) {
                 return last;
             } else {
+                Log.d("first last and display names all empty");
                 return identity.getUserId();
             }
         }
