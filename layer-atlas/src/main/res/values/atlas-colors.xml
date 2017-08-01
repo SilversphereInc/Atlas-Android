@@ -18,6 +18,8 @@
     <color name="atlas_color_primary_blue">#FF21AAE1</color>
     <color name="atlas_color_dark_blue">#FF198BB8</color>
     <color name="atlas_color_primary_gray">#FFEBEBEB</color>
+    <color name="knockdown_grey">#F0F0F0</color>
+    <color name="knockdown_green">#748457</color>
 
     <color name="atlas_status_bar_background">@color/atlas_color_dark_blue</color>
     <color name="atlas_action_bar_background">@color/atlas_color_primary_blue</color>
@@ -53,8 +55,8 @@
     <color name="atlas_avatar_text">@android:color/black</color>
     <color name="atlas_chip_background">@color/atlas_color_primary_gray</color>
 
-    <color name="atlas_cell_them_background">@color/atlas_color_primary_gray</color>
-    <color name="atlas_cell_me_background">@color/atlas_color_primary_blue</color>
+    <color name="atlas_cell_them_background">@color/knockdown_grey</color>
+    <color name="atlas_cell_me_background">@color/knockdown_green</color>
 
     <color name="atlas_icon_enabled">#8A000000</color>
     <color name="atlas_icon_disabled">#3D000000</color>
